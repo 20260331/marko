@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING, cast
 
 from .helpers import MarkoExtension, load_extension
 from .html_renderer import HTMLRenderer
+from .link_migration import LinkAction, LinkDecision, LinkKind, migrate_links
 from .parser import Parser
 from .renderer import Renderer
 
@@ -168,12 +169,16 @@ def render(parsed: Document) -> str:
 
 __all__ = [
     "HTMLRenderer",
+    "LinkAction",
+    "LinkDecision",
+    "LinkKind",
     "Markdown",
     "MarkoExtension",
     "Parser",
     "Renderer",
     "convert",
     "load_extension",
+    "migrate_links",
     "parse",
     "render",
 ]

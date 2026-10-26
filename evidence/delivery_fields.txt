@@ -1,0 +1,9 @@
+Type：有效轮数 < 100 且 效果差
+
+产物结果：部分完成。本地化目录导出、文本与链接/强调/代码结构的占位符隔离、译文应用和大部分结构校验均已实现；专项 39 项及全量 1475 项测试通过。但仍有两点关键缺口：一是只有链接或强调文本的块中，仅填写嵌套译文不会生效，必须额外填写外层占位符 {0}，造成静默漏译；二是强调文本译文含 * 时会被静默拆出强调范围，链接文本译文含成对方括号时会拆坏原链接，说明“应用前校验译文仍保持原结构”没有覆盖最终 Markdown 序列化边界。
+
+产物补充材料：有效轮数 73，分支 swe/q3-localization-catalog-roundtrip，基线 1cc1583dd38bc41fecc113e56df4ce9d2d693efa。专项测试命令为 python3 -m pytest tests/test_l10n.py -q，结果为 39 passed。全量测试命令为 python3 -m pytest -q，结果为 1475 passed。独立复现中，**important** 仅把嵌套译文设为 重要 时应用结果仍为 **important**，补写外层 {0} 后才变为 **重要**；*important* 的强调文本译文 2*3 得到 *2*3*，HTML 为 <p><em>2</em>3*</p>；[docs](https://example.com/docs) 的链接文本译文 ] hacked [ 得到 [] hacked [](https://example.com/docs)，HTML 为 <p>[] hacked <a href="https://example.com/docs"></a></p>。black 检查通过；mypy 仅剩仓库既有的 objprint 可选依赖缺失；项目预提交使用的 flake8-bugbear 对新代码报告 B042/B009，测试文件报告 F541，docs/api.rst 另有文件尾多余空行。
+
+是否完成需求：部分完成
+
+Commit URL：

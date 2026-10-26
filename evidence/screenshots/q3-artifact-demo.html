@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<title>marko q3 artifact demo</title><style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #10151b; color: #d8e1ea;
+       font-family: "DejaVu Sans Mono", "Noto Sans CJK SC", monospace; }
+.wrap { padding: 30px 34px; }
+.bar { display: flex; gap: 8px; margin-bottom: 14px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f57; } .yellow { background: #febc2e; } .green { background: #28c840; }
+h1 { font-size: 20px; color: #fff; margin: 0 0 8px; font-family: "Noto Sans CJK SC", sans-serif; }
+.sub { color: #8ea1b4; font-size: 13px; margin-bottom: 18px; }
+pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.55; }
+.ok { color: #7ee787; } .warn { color: #ffd166; } .bad { color: #ff7b72; }
+</style></head><body><div class="wrap">
+<div class="bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+<h1>marko q3 · 本地化目录真实运行记录</h1>
+<div class="sub">PYTHONPATH=. python3 evidence/demo_q3.py · 基准提交 1cc1583 · 分支 swe/q3-localization-catalog-roundtrip</div>
+<pre>$ PYTHONPATH=. python3 evidence/demo_q3.py
+== 1. Export: sentence-level text plus protected placeholders ==
+0        heading      source=&#x27;Release notes&#x27;
+2        paragraph    source=&#x27;Use {0} to see {1} and read {2}.&#x27;
+         placeholder {0} type=code_span attrs={&#x27;content&#x27;: &#x27;git status&#x27;}
+         placeholder {1} type=strong_emphasis attrs={}
+         placeholder {2} type=link attrs={&#x27;dest&#x27;: &#x27;https://example.com/docs&#x27;, &#x27;title&#x27;: &#x27;Guide&#x27;}
+4.0.0    paragraph    source=&#x27;[ ] review {0}&#x27;
+         placeholder {0} type=emphasis attrs={}
+
+== 2. Apply a reordered Chinese translation ==
+# Release notes
+
+阅读[文档](https://example.com/docs &quot;Guide&quot;)，用`git status`查看**更改**。
+
+- [ ] review *draft*
+
+link targets in <span class="warn">re-parsed HTML:</span> 1
+
+== 3. Reject structure injected by a translator ==
+<span class="bad">CatalogError:</span> [catalog entry 0] the translation does not preserve the original Markdown structure: unexpected strong_emphasis
+
+== 4. Defect: nested-only translation is ignored ==
+input:         **important**
+nested only:   &#x27;**important**\n&#x27;
+with outer {0}: &#x27;**重要**\n&#x27;
+
+== 5. Defect: delimiter characters escape nested structure ==
+emphasis input:  *important*
+emphasis output: *2*3*
+<span class="warn">re-parsed HTML:</span>  &lt;p&gt;&lt;em&gt;2&lt;/em&gt;3*&lt;/p&gt;
+
+link input:       [docs](https://example.com/docs)
+link output:      [] hacked [](https://example.com/docs)
+<span class="warn">re-parsed HTML:</span>   &lt;p&gt;[] hacked &lt;a href=&quot;https://example.com/docs&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+== 6. JSON catalog is serializable ==
+{ ... entries: 3
+</pre></div></body></html>

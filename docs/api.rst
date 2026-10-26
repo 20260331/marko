@@ -60,3 +60,28 @@ Helper Classes
 
 .. autoclass:: marko.helpers.MarkoExtension
     :members:
+
+Localization
+------------
+
+.. module:: marko.l10n
+
+.. autoclass:: Catalog
+    :members:
+
+.. autoclass:: CatalogEntry
+    :members:
+
+.. autoclass:: Segment
+    :members:
+
+.. autoclass:: Placeholder
+    :members:
+
+.. autoexception:: CatalogError
+    :members:
+
+.. autofunction:: export_catalog
+
+.. autofunction:: apply_translations
+

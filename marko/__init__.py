@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING, cast
 
 from .helpers import MarkoExtension, load_extension
 from .html_renderer import HTMLRenderer
+from .l10n import Catalog, CatalogError, apply_translations, export_catalog
 from .parser import Parser
 from .renderer import Renderer
 
@@ -167,12 +168,16 @@ def render(parsed: Document) -> str:
 
 
 __all__ = [
+    "Catalog",
+    "CatalogError",
     "HTMLRenderer",
     "Markdown",
     "MarkoExtension",
     "Parser",
     "Renderer",
+    "apply_translations",
     "convert",
+    "export_catalog",
     "load_extension",
     "parse",
     "render",

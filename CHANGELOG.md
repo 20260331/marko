@@ -1,3 +1,9 @@
+## Unreleased
+
+### Added
+
+- Add an `include` extension that inlines external markdown fragments resolved by a caller-supplied resolver. Each included document is parsed with an independent link-reference and footnote scope, fragments keep their structure when the directive is nested in lists or block quotes, includes can be nested, and circular includes and resolution failures raise dedicated `IncludeError` subclasses (or can be skipped with `on_error="skip"`).
+
 ## v2.2.4(2026-08-12)
 
 ### Added

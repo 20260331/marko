@@ -3,6 +3,8 @@ Built-in Extensions
 
 .. automodule:: marko.ext.gfm
 
+.. automodule:: marko.ext.conditional
+
 .. automodule:: marko.ext.toc
 
 .. automodule:: marko.ext.footnote

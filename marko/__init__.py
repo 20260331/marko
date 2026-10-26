@@ -19,6 +19,13 @@ from .helpers import MarkoExtension, load_extension
 from .html_renderer import HTMLRenderer
 from .parser import Parser
 from .renderer import Renderer
+from .semdiff import (
+    ChangeSet,
+    SemNode,
+    render_semantic,
+    semantic_diff,
+    semanticize,
+)
 
 if TYPE_CHECKING:
     from .block import Document
@@ -167,13 +174,18 @@ def render(parsed: Document) -> str:
 
 
 __all__ = [
+    "ChangeSet",
     "HTMLRenderer",
     "Markdown",
     "MarkoExtension",
     "Parser",
     "Renderer",
+    "SemNode",
     "convert",
     "load_extension",
     "parse",
     "render",
+    "render_semantic",
+    "semantic_diff",
+    "semanticize",
 ]

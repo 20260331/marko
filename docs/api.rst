@@ -60,3 +60,9 @@ Helper Classes
 
 .. autoclass:: marko.helpers.MarkoExtension
     :members:
+
+Semantic Diff
+-------------
+
+.. automodule:: marko.semdiff
+    :members:
